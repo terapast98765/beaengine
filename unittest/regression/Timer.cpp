@@ -155,8 +155,8 @@ double Timer::getElapsedTimeInMicroSec()
     if(!stopped)
         gettimeofday(&endCount, NULL);
 
-    startTimeInMicroSec = (startCount.tv_sec * 1000000.0) + startCount.tv_usec;
-    endTimeInMicroSec = (endCount.tv_sec * 1000000.0) + endCount.tv_usec;
+    startTimeInMicroSec = ((double)startCount.tv_sec * 1000000.0) + (double)startCount.tv_usec;
+    endTimeInMicroSec = ((double)endCount.tv_sec * 1000000.0) + (double)endCount.tv_usec;
 #endif
 
     return endTimeInMicroSec - startTimeInMicroSec;
