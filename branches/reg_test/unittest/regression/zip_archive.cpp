@@ -41,9 +41,9 @@
 
 #ifdef WIN32
 static uLong filetime(
-		      const char *f,                /* name of file to get info on */
-		      tm_zip *tmzip,             /* return value: access, modific. and creation times */
-		      uLong *dt             /* dostime */
+		      const char *f, /* name of file to get info on */
+		      tm_zip *tmzip, /* return value: access, modific. and creation times */
+		      uLong *dt      /* dostime */
 		      )
 {
   int ret = 0;
@@ -51,7 +51,7 @@ static uLong filetime(
       FILETIME ftLocal;
       HANDLE hFind;
       WIN32_FIND_DATA  ff32;
-
+      
       hFind = FindFirstFile(f,&ff32);
       if (hFind != INVALID_HANDLE_VALUE)
       {
@@ -64,11 +64,10 @@ static uLong filetime(
   return ret;
 }
 #else
-#ifdef unix
 static uLong filetime(
-		      const char *f,               /* name of file to get info on */
-		      tm_zip *tmzip,         /* return value: access, modific. and creation times */
-		      uLong *dt             /* dostime */
+		      const char *f,  /* name of file to get info on */
+		      tm_zip *tmzip,  /* return value: access, modific. and creation times */
+		      uLong * /*dt*/  /* dostime */
 		      )
 {
   int ret=0;
@@ -79,7 +78,7 @@ static uLong filetime(
   if (strcmp(f,"-")!=0)
   {
     char name[MAXFILENAME+1];
-    int len = strlen(f);
+    size_t len = strlen(f);
     if (len > MAXFILENAME)
       len = MAXFILENAME;
 
@@ -107,16 +106,6 @@ static uLong filetime(
 
   return ret;
 }
-#else
-uLong filetime(
-	       const char *f,                /* name of file to get info on */
-	       tm_zip *tmzip,             /* return value: access, modific. and creation times */
-	       uLong *dt             /* dostime */
-	       )
-{
-    return 0;
-}
-#endif
 #endif
 
 static int check_exist_file (const char* filename)
@@ -372,9 +361,15 @@ zip_iarchive_c::zip_iarchive_c (const char* path)
 	  throw std::runtime_error ("Zip file is corrupted.");
         }
         if (file_info.uncompressed_size>0)
-            ratio = (file_info.compressed_size*100)/file_info.uncompressed_size;
-	zip_entry_c ze (file_info.uncompressed_size, file_info.compression_method, 
-			ratio, file_info.crc, filename_inzip, comment, i, this);
+	  ratio = 100.0* (double)(file_info.compressed_size)/(double)file_info.uncompressed_size;
+	zip_entry_c ze ((size_t)file_info.uncompressed_size, 
+			(int)file_info.compression_method,
+			ratio, 
+			(UInt32)file_info.crc, 
+			filename_inzip, 
+			comment, 
+			(int)i, 
+			this);
 	m_pimpl->m_entries.push_back (ze);
 			
         if ((i+1)<gi.number_entry)
@@ -448,14 +443,14 @@ void zip_iarchive_c::_explode (int index)
       throw std::runtime_error ("Zip file is corrupted.");
     }
   char buff [WRITEBUFFERSIZE];
-  int remains = file_info.uncompressed_size;
+  uLong remains = file_info.uncompressed_size;
   FILE* fout = fopen (filename_inzip, "wb");
   if (!fout)
     {
       unzCloseCurrentFile (m_pimpl->m_uzf);
       throw std::runtime_error ("Failed to open output file");
     }
-  int exploded = 0;
+  uLong exploded = 0;
   while (exploded < remains)
     {
       int n = unzReadCurrentFile (m_pimpl->m_uzf, buff, WRITEBUFFERSIZE);

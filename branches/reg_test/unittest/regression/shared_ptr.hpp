@@ -154,8 +154,8 @@ shared_ptr_c<T>::shared_ptr_c (elem_t* ptr)
 // ---------------------------------------------------------------------
 template <class T>
 inline
-shared_ptr_c<T>::shared_ptr_c (elem_t* ptr, shared_counter_base_c* counter)
-  : m_counter (counter),
+shared_ptr_c<T>::shared_ptr_c (elem_t* ptr, shared_counter_base_c* counter_)
+  : m_counter (counter_),
     m_ptr (0)
 {
   if (ptr)

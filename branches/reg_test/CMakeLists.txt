@@ -312,8 +312,8 @@ FIND_PACKAGE (ZLIB)
 
 set (build_modules 
   beaengineSources
-  #examples
-  #unittest
+  examples
+  unittest
 )
 
 

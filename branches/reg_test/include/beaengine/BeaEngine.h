@@ -146,7 +146,7 @@ typedef struct {
 typedef struct _Disasm {
    UIntPtr EIP;
    UInt64 VirtualAddr;
-   UInt32 SecurityBlock;
+   UIntPtr SecurityBlock;
    char CompleteInstr[INSTRUCT_LENGTH];
    UInt32 Archi;
    UInt64 Options;

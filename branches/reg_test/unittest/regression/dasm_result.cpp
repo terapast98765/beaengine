@@ -32,9 +32,9 @@ dasm_result_entry_s::~dasm_result_entry_s ()
     }
 }
 // =============================================================
-dasm_result_c::dasm_result_c (const char* name, const char* comment)
-  : m_name    (name),
-    m_comment (comment),
+dasm_result_c::dasm_result_c (const char* name_, const char* comment_)
+  : m_name    (name_),
+    m_comment (comment_),
     m_time    (0.0)
 {
 }
