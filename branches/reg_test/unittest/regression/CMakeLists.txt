@@ -1,7 +1,23 @@
 set (target regression)
 
-set (src main.cpp table_reader.cpp dasm_sexp.cpp Timer.cpp dasm_result.cpp temp_path.cpp zip_archive.cpp)
-set (hdr table_reader.hpp dasm_sexp.hpp Timer.h dasm_result.hpp temp_path.hpp zip_archive.hpp)
+set (src 
+  main.cpp 
+  table_reader.cpp 
+  dasm_sexp.cpp 
+  Timer.cpp 
+  dasm_result.cpp 
+  temp_path.cpp 
+  zip_archive.cpp
+  cmd_line.cpp)
+
+set (hdr 
+  table_reader.hpp 
+  dasm_sexp.hpp 
+  Timer.h 
+  dasm_result.hpp 
+  temp_path.hpp 
+  zip_archive.hpp
+  cmd_line.hpp)
 
 add_executable (${target} ${src} ${hdr})
 

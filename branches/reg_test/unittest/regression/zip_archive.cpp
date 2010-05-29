@@ -74,27 +74,16 @@ static uLong filetime(
   struct stat s;        /* results of stat() */
   struct tm* filedate;
   time_t tm_t=0;
-
-  if (strcmp(f,"-")!=0)
-  {
-    char name[MAXFILENAME+1];
-    size_t len = strlen(f);
-    if (len > MAXFILENAME)
-      len = MAXFILENAME;
-
-    strncpy(name, f,MAXFILENAME-1);
-    /* strncpy doesnt append the trailing NULL, of the string is too long. */
-    name[ MAXFILENAME ] = '\0';
-
-    if (name[len - 1] == '/')
-      name[len - 1] = '\0';
-    /* not all systems allow stat'ing a file with / appended */
-    if (stat(name,&s)==0)
+  if (stat(f,&s)==0)
     {
       tm_t = s.st_mtime;
       ret = 1;
     }
-  }
+  else
+    {
+      return 0;
+    }
+
   filedate = localtime(&tm_t);
 
   tmzip->tm_sec  = filedate->tm_sec;
