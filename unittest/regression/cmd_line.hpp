@@ -14,6 +14,10 @@ public:
   std::string result_file () const;
 
   bool run_test () const;
+
+  bool inspect_mode () const;
+
+  std::string file_to_inspect () const;
   // use following if run_test is true
   
   std::string name () const;

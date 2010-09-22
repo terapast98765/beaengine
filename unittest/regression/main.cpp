@@ -111,38 +111,12 @@ void show_zip_content (const char* zipfile)
 {
   zip_iarchive_c zip (zipfile);
   int k = 0;
+  std::cout << "# | NAME     | COMMENT" << std::endl;
   for (zip_iarchive_c::iterator_t i = zip.begin (); i != zip.end (); i++, k++)
     {
-      std::cout << k << " )" << i->name () << ":" << i->comment () << std::endl;
+      std::cout << k << " | " << i->name () << "       | " << i->comment () << std::endl;
     }
 }
-// ----------------------------------------------------------
-#if BUGBUG
-int main (int argc, char* argv [])
-{
-  if (argc != 2)
-    {
-      std::cerr << "USAGE: " << argv [0] << " <table file name>" << std::endl;
-      return 1;
-    }
-  const char* table_file = argv [1];
-#if 0
-  try
-    {
-      dasm_result_c dasm_results ("test", "bugbug");
-      do_disasm_test (table_file, dasm_results);
-      dasm_to_sexp (std::cout, dasm_results);
-      return 0;
-    }
-  catch (std::exception& e)
-    {
-      std::cerr << "Error: " << e.what () << std::endl;
-    }
-  return 1;
-#endif
-  show_zip_content (table_file);
-}
-#endif
 // ----------------------------------------------------------
 static
 void do_dry_run (const std::string& table_file)
@@ -226,6 +200,10 @@ int main (int argc, char* argv [])
 	  do_run_test (cl.table_file (), cl.result_file (),
 		       cl.name ()      , cl.comment ());
 	  return 0;
+	}
+      if (cl.inspect_mode ())
+	{
+	  show_zip_content (cl.file_to_inspect ().c_str ());
 	}
     }
   catch (std::exception& e)

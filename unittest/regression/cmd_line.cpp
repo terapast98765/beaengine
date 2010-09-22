@@ -87,7 +87,28 @@ cmd_line_c::cmd_line_c (int argc, char* argv [])
       m_table_file  = a_table.getValue ();
       return;
     }
-  
+
+  if (m_inspect)
+    {
+      if (a_result.isSet ())
+	{
+	  throw std::runtime_error ("Output file is meaningless for inspection mode");
+	}
+      if (a_name.isSet ())
+	{
+	  throw std::runtime_error ("Test name is meaningless for inspection mode");
+	}
+      if (a_comment.isSet ())
+	{
+	  throw std::runtime_error ("Test comment is meaningless for inspection mode");
+	}
+      if (!a_table.isSet ())
+	{
+	  throw std::runtime_error ("Input file name is required for inspection mode");
+	}
+      m_table_file = a_table.getValue ();
+      return;
+    }
 }
 // -----------------------------------------------------
 // in case of dry run, only table_file is mandatory
@@ -104,6 +125,16 @@ std::string cmd_line_c::result_file () const
 bool cmd_line_c::run_test () const
 {
   return m_run_test;
+}
+// -----------------------------------------------------
+bool cmd_line_c::inspect_mode () const
+{
+  return m_inspect;
+}
+// -----------------------------------------------------
+std::string cmd_line_c::file_to_inspect () const
+{
+  return m_table_file;
 }
 // -----------------------------------------------------
 std::string cmd_line_c::name () const
