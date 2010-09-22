@@ -17,6 +17,8 @@ struct dasm_result_entry_s
   DISASM*            m_dasm;
   table_item_c       m_input;
   const int          m_dasm_len;
+private:
+	dasm_result_entry_s& operator = (const dasm_result_entry_s&);
 };
 
 class dasm_result_c

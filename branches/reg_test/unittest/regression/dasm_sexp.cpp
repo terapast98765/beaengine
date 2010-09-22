@@ -7,7 +7,11 @@
 #if !defined(BEA_LACKS_SNPRINTF)
   #define my_snprintf snprintf 
 #else
-  #define my_snprintf 
+#if defined (_MSC_VER)
+  #define my_snprintf _snprintf 
+#else
+#error "Define MY_SNPRINTF"
+#endif
 #endif
 
 #if defined(__WATCOMC__)
@@ -73,10 +77,10 @@ private:
 };
 
 #define BEA_NV_INIT(FMT, V)			\
-  static const size_t BUFF_LEN = 64;		\
-  static char BUFF [BUFF_LEN];			\
-  my_snprintf (BUFF, BUFF_LEN, FMT, V);		\
-  m_value = BUFF
+  static const size_t bea_nv_BUFF_LEN = 64;		\
+  static char bea_nv_BUFF [bea_nv_BUFF_LEN];			\
+  my_snprintf (bea_nv_BUFF, bea_nv_BUFF_LEN, FMT, V);		\
+  m_value = std::string (bea_nv_BUFF);
 
 // -----------------------------------------------------------------------
 name_value_c::name_value_c (const char* name_, Int8 v)
@@ -162,6 +166,7 @@ name_value_c::name_value_c (const char* name_, double v)
     m_name (name_)
 {
   BEA_NV_INIT ("%f", v);
+  std::cout << m_value << std::endl;
 }
 // ------------------------------------------------------------
 const std::string& name_value_c::name () const
