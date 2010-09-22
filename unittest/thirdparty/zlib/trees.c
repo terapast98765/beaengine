@@ -380,8 +380,8 @@ void gen_trees_header()
 /* ===========================================================================
  * Initialize the tree data structures for a new zlib stream.
  */
-void _tr_init(s)
-    deflate_state *s;
+void _tr_init(
+    deflate_state *s)
 {
     tr_static_init();
 
@@ -409,8 +409,8 @@ void _tr_init(s)
 /* ===========================================================================
  * Initialize a new block.
  */
-local void init_block(s)
-    deflate_state *s;
+local void init_block(
+    deflate_state *s)
 {
     int n; /* iterates over tree elements */
 
@@ -453,10 +453,10 @@ local void init_block(s)
  * when the heap property is re-established (each father smaller than its
  * two sons).
  */
-local void pqdownheap(s, tree, k)
-    deflate_state *s;
-    ct_data *tree;  /* the tree to restore */
-    int k;               /* node to move down */
+local void pqdownheap(
+    deflate_state *s,
+    ct_data *tree,  /* the tree to restore */
+    int k               /* node to move down */)
 {
     int v = s->heap[k];
     int j = k << 1;  /* left son of k */
@@ -488,9 +488,9 @@ local void pqdownheap(s, tree, k)
  *     The length opt_len is updated; static_len is also updated if stree is
  *     not null.
  */
-local void gen_bitlen(s, desc)
-    deflate_state *s;
-    tree_desc *desc;    /* the tree descriptor */
+local void gen_bitlen(
+    deflate_state *s,
+    tree_desc *desc    /* the tree descriptor */)
 {
     ct_data *tree        = desc->dyn_tree;
     int max_code         = desc->max_code;
@@ -575,10 +575,11 @@ local void gen_bitlen(s, desc)
  * OUT assertion: the field code is set for all tree elements of non
  *     zero code length.
  */
-local void gen_codes (tree, max_code, bl_count)
-    ct_data *tree;             /* the tree to decorate */
-    int max_code;              /* largest code with non zero frequency */
-    ushf *bl_count;            /* number of codes at each bit length */
+local void gen_codes (
+    ct_data *tree,             /* the tree to decorate */
+    int max_code,              /* largest code with non zero frequency */
+    ushf *bl_count            /* number of codes at each bit length */
+	)
 {
     ush next_code[MAX_BITS+1]; /* next code value for each bit length */
     ush code = 0;              /* running code value */

@@ -155,7 +155,15 @@ zip_oarchive_c::~zip_oarchive_c ()
 // -----------------------------------------------------------------
 void zip_oarchive_c::put (const std::string& file, const std::string& comment)
 {
-  const char* filenameinzip = file.c_str ();
+#if defined (WIN32)
+	const char sep = '\\';
+#else
+	const char sep = '/';
+#endif
+
+	std::string::size_type sep_pos = file.rfind (sep);
+
+  const char* filenameinzip = file.c_str () + (sep_pos + 1);
   zip_fileinfo zi;
   unsigned long crcFile=0;
   
@@ -164,7 +172,7 @@ void zip_oarchive_c::put (const std::string& file, const std::string& comment)
   zi.dosDate = 0;
   zi.internal_fa = 0;
   zi.external_fa = 0;
-  if (filetime(filenameinzip,&zi.tmz_date,&zi.dosDate) == 0)
+  if (filetime(file.c_str (),&zi.tmz_date,&zi.dosDate) == 0)
     {
       throw std::runtime_error ("Failed to obtain filetime");
     }
@@ -193,7 +201,7 @@ void zip_oarchive_c::put (const std::string& file, const std::string& comment)
        throw std::runtime_error ("Failed to open file in zip");
      }
    FILE* fin = NULL;
-   fin = fopen(filenameinzip,"rb");
+   fin = fopen(file.c_str (),"rb");
    if (fin==NULL)
      {
        throw std::runtime_error ("Failed to open source file for reading");

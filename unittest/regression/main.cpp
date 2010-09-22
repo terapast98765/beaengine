@@ -110,9 +110,10 @@ void do_dasm_test (const std::string& table_file, dasm_result_c& result)
 void show_zip_content (const char* zipfile)
 {
   zip_iarchive_c zip (zipfile);
-  for (zip_iarchive_c::iterator_t i = zip.begin (); i != zip.end (); i++)
+  int k = 0;
+  for (zip_iarchive_c::iterator_t i = zip.begin (); i != zip.end (); i++, k++)
     {
-      std::cout << i->name () << ":" << i->comment () << std::endl;
+      std::cout << k << " )" << i->name () << ":" << i->comment () << std::endl;
     }
 }
 // ----------------------------------------------------------
