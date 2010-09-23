@@ -353,7 +353,8 @@ if (optBUILD_64BIT)
   set (BEA_TARGET "${BEA_TARGET}_64")
 endif ()
 
- 
+include (CTest)
+ENABLE_TESTING() 
 
 foreach (mdl ${build_modules})
   set (MDL_SRC "${mdl}")
