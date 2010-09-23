@@ -31,8 +31,8 @@
 //
 // This file implements death tests.
 
-#include <gtest/gtest-death-test.h>
-#include <gtest/internal/gtest-port.h>
+#include <unittest/thirdparty/google_test/include/gtest/gtest-death-test.h>
+#include <unittest/thirdparty/google_test/include/gtest/internal/gtest-port.h>
 
 #if GTEST_HAS_DEATH_TEST
 
@@ -54,8 +54,8 @@
 
 #endif  // GTEST_HAS_DEATH_TEST
 
-#include <gtest/gtest-message.h>
-#include <gtest/internal/gtest-string.h>
+#include <unittest/thirdparty/google_test/include/gtest/gtest-message.h>
+#include <unittest/thirdparty/google_test/include/gtest/internal/gtest-string.h>
 
 // Indicates that this translation unit is part of Google Test's
 // implementation.  It must come before gtest-internal-inl.h is
@@ -63,7 +63,7 @@
 // prevent a user from accidentally including gtest-internal-inl.h in
 // his code.
 #define GTEST_IMPLEMENTATION_ 1
-#include "src/gtest-internal-inl.h"
+#include "unittest/thirdparty/google_test/src/gtest-internal-inl.h"
 #undef GTEST_IMPLEMENTATION_
 
 namespace testing {
