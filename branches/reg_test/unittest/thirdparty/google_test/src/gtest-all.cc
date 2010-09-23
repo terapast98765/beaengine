@@ -36,7 +36,7 @@
 
 // This line ensures that gtest.h can be compiled on its own, even
 // when it's fused.
-#include "unittest/thirdparty/google_test/include/gtest.h"
+#include "unittest/thirdparty/google_test/include/gtest/gtest.h"
 
 // The following lines pull in the real gtest *.cc files.
 #include "unittest/thirdparty/google_test/src/gtest.cc"

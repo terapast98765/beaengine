@@ -4,5 +4,5 @@ endif ()
 
 add_subdirectory (thirdparty/sexpr)
 add_subdirectory (thirdparty/microzip)
-#add_subdirectory (thirdparty/google_test)
+add_subdirectory (thirdparty/google_test)
 add_subdirectory (regression)
